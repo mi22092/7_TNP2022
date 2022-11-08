@@ -6,7 +6,14 @@ Ovo je fajl za opšti plan/strukturu seminarskog.
 - Uvod
 - Istorija
 - Zašto je došlo do potrebe za razvoj
+- Kako funkcioniše
+  - Paralelna obrada
+  - Modeli paralelnog programiranja (shared memory, message-passing, partitioned global address space)
 - Upotrebe
+  - Osnovne primene
+  - Da li je uvek korisnije od drugih tipova programiranja + mane, problemi koji mogu nastati u kodu (data races, deadlocks)
+  - Okruženje rada, programski jezici koji se najčešće koriste
 - Primeri
   - Forme paralelnog pr (bit-level, instruction level itd)?
+  - Primer koda u nekom programskom jeziku kao C#
 - Zaključak i izvori
