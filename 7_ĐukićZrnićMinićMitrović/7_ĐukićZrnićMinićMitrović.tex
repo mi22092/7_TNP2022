@@ -1,0 +1,65 @@
+% !TEX encoding = UTF-8 Unicode
+
+\documentclass[a4paper]{article}
+
+\usepackage{color}
+\usepackage{url}
+\usepackage[T2A]{fontenc} % enable Cyrillic fonts
+\usepackage[utf8]{inputenc} % make weird characters work
+\usepackage{graphicx}
+
+\usepackage[english,serbian]{babel}
+
+\usepackage[unicode]{hyperref}
+\hypersetup{colorlinks,citecolor=green,filecolor=green,linkcolor=blue,urlcolor=blue}
+
+\newtheorem{primer}{Primer}[section]
+
+\begin{document}
+	
+	\title{Paralelno programiranje\\ \small{Seminarski rad u okviru kursa\\Tehničko i naučno pisanje\\ Matematički fakultet}}
+	
+	\author
+	{
+		Aleksandar Đukić\\email
+		\and
+		Iva Minić\\mi22153@alas.matf.bg.ac.rs
+		\and
+		Luka Mitrović\\email
+		\and
+		Marija Zrnić\\email
+	}
+	
+	\date{13.~novembar 2022.}
+	\maketitle
+	
+	\abstract{
+		Ovde ide tekst ovde ide tekst ovde ide tekst ovde ide tekst ovde ide tekst ovde ide tekst ovde ide tekst ovde ide tekst ovde ide tekst ovde ide tekst ovde ide tekst ovde ide tekst ovde ide tekst ovde ide tekst
+		
+		\tableofcontents
+		
+	\newpage
+	\section{Uvod}
+	Ovde ide tekst ovde ide tekst ovde ide tekst ovde ide tekst ovde ide tekst ovde ide tekst ovde ide tekst ovde ide tekst ovde ide tekst ovde ide tekst ovde ide tekst ovde ide tekst ovde ide tekst ovde ide tekst
+	
+	\section{Istorija}
+	Da bi se pričalo o istoriji paralelnog programiranja, potrebno je prvo pričati o istoriji paralelne obrade.
+	\subsection{Istorija paralelne obrade}
+	Koreni paralelne obrade nalaze se u 1950-im godinama. Dva zaposlena iz IBM (en. International Business Machines Corporation), Džon Kok i Daniel Slotnik, prvi put diskutuju paralelizam u radu koji su zajedno objavili 1958. [1] Tokom narednih godina, razne firme počinju rad na razvoju mašina sposobnih za paralelnu obradu. 1962, korporacija Burroughs proizvodi ~{\em D825 Modular Data Processing System} - računar razvijen za rad u vojnom okruženju.[2] Zbog njegove namene, on radi po principu SMP (eng. symmetric multiprocessing ili shared-memory multiprocessing) - dva ili više procesora su povezana na zajedničku memoriju, i kontroliše ih isti operativni sistem. U slučaju D825, koriste se 4 centralne procesorske jedinice, koje imaju pristup do 16 modula memorije [2]. D825 se smatra prvim pravim multiprocesorskim računarom [3].\par
+	Na Spring Joint konferenciji Američke federacije društva za obrađivanje podataka (eng. American Federation of Information Processing Societies, AFIPS), održane 1967, Daniel Slotnik i Džin Amdal debatovali su o paralelnoj obradi [5]. U ovoj debati nastaje Amdalov zakon ili Amdalov argument, koji opisuje granicu efikasnosti paralelne obrade. Ovaj zakon će se često koristiti da bi se predvidila efikasnost i vreme izvršavanja paralelizovanog programa.\par
+	(treba jos pisati kako je nastao distributed memory model)
+	\subsection{Istorija paralelnog programiranja}
+	Uz razvoj paralelne obrade, počeo je da se pojavljuje veliki broj interfejsa koji su se do 1990-ih ujedinili u nekoliko standarda. 1992. održana je radionica na temu standarda za razmenu poruka u okruženju sa raspodeljenom memorijom (eng. Standards for Message-Passing in a Distributed Memory Environment) [6], na kojoj je započet razvoj standarda koji će se 1994. objaviti pod nazivom MPI (eng. Message Passing Interface). Naknadno su objavljeni standardi MPI 2.0 (1996), MPI 3.0 (2012) i MPI 4.0 (2021).[7]\par
+	Sa druge strane, za programiranje u SMP okruženju, OpenMP ARB (Architecture Review Board) objavljuje prve specifikacije interfejsa OpenMP 1.0 za Fortran u 1997, a sledeće godine i standard za C/C++. Nakon toga, objavljene su i verzije OpenMP 2.0 (2007), 3.0 (2008), 4.0 (2013) i 5.2 (2021), koji se koristi danas. [8]
+	
+	\newpage
+	(ovo cu srediti eventualno)
+	[1]https://ei.cs.vt.edu/~history/Parallel.html
+	[2]https://dl.acm.org/doi/pdf/10.1145/1461518.1461527
+	[3]https://dl.acm.org/doi/pdf/10.1145/356683.356688 strana 11
+	[4]http://users.ece.utexas.edu/~bevans/papers/2009/multicore/MulticoreDSPsForIEEESPMFinal.pdf
+	[5]https://dl.acm.org/doi/proceedings/10.1145/1465482?tocHeading=heading14
+	[6]https://technicalreports.ornl.gov/1992/3445603661204.pdf
+	[7]https://www.mpi-forum.org/docs/
+	[8]https://www.openmp.org/wp-content/uploads/OpenMP-API-Specification-5.0.pdf
+\end{document}
