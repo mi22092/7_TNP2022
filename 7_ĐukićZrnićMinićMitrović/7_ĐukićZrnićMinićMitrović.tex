@@ -25,7 +25,7 @@
 		\and
 		Iva Minić\\mi22153@alas.matf.bg.ac.rs
 		\and
-		Luka Mitrović\\email
+		Luka Mitrović\\mi22092@alas.matf.bg.ac.rs
 		\and
 		Marija Zrnić\\email
 	}
@@ -45,21 +45,53 @@
 	\section{Istorija}
 	Da bi se pričalo o istoriji paralelnog programiranja, potrebno je prvo pričati o istoriji paralelne obrade.
 	\subsection{Istorija paralelne obrade}
-	Koreni paralelne obrade nalaze se u 1950-im godinama. Dva zaposlena iz IBM (en. International Business Machines Corporation), Džon Kok i Daniel Slotnik, prvi put diskutuju paralelizam u radu koji su zajedno objavili 1958. [1] Tokom narednih godina, razne firme počinju rad na razvoju mašina sposobnih za paralelnu obradu. 1962, korporacija Burroughs proizvodi ~{\em D825 Modular Data Processing System} - računar razvijen za rad u vojnom okruženju.[2] Zbog njegove namene, on radi po principu SMP (eng. symmetric multiprocessing ili shared-memory multiprocessing) - dva ili više procesora su povezana na zajedničku memoriju, i kontroliše ih isti operativni sistem. U slučaju D825, koriste se 4 centralne procesorske jedinice, koje imaju pristup do 16 modula memorije [2]. D825 se smatra prvim pravim multiprocesorskim računarom [3].\par
-	Na Spring Joint konferenciji Američke federacije društva za obrađivanje podataka (eng. American Federation of Information Processing Societies, AFIPS), održane 1967, Daniel Slotnik i Džin Amdal debatovali su o paralelnoj obradi [5]. U ovoj debati nastaje Amdalov zakon ili Amdalov argument, koji opisuje granicu efikasnosti paralelne obrade. Ovaj zakon će se često koristiti da bi se predvidila efikasnost i vreme izvršavanja paralelizovanog programa.\par
+	Koreni paralelne obrade nalaze se u 1950-im godinama. Dva zaposlena iz IBM (en. International Business Machines Corporation), Džon Kok i Daniel Slotnik, prvi put diskutuju paralelizam u radu koji su zajedno objavili 1958 \cite{historyofdevelopment}. Tokom narednih godina, razne firme počinju rad na razvoju mašina sposobnih za paralelnu obradu. 1962, korporacija Burroughs proizvodi ~{\em D825 Modular Data Processing System} - računar razvijen za rad u vojnom okruženju \cite{d825}. Zbog njegove namene, on radi po principu SMP (eng. symmetric multiprocessing ili shared-memory multiprocessing) - dva ili više procesora su povezana na zajedničku memoriju, i kontroliše ih isti operativni sistem. U slučaju D825, koriste se 4 centralne procesorske jedinice, koje imaju pristup do 16 modula memorije \cite{d825}. D825 se smatra prvim pravim multiprocesorskim računarom \cite{multiprocessororganizationsurvey}.\par
+	Na Spring Joint konferenciji Američke federacije društva za obrađivanje podataka (eng. American Federation of Information Processing Societies, AFIPS), održane 1967, Daniel Slotnik i Džin Amdal debatovali su o paralelnoj obradi \cite{springjoint}. U ovoj debati nastaje Amdalov zakon ili Amdalov argument, koji opisuje granicu efikasnosti paralelne obrade. Ovaj zakon će se često koristiti da bi se predvidila efikasnost i vreme izvršavanja paralelizovanog programa.\par
 	(treba jos pisati kako je nastao distributed memory model)
 	\subsection{Istorija paralelnog programiranja}
-	Uz razvoj paralelne obrade, počeo je da se pojavljuje veliki broj interfejsa koji su se do 1990-ih ujedinili u nekoliko standarda. 1992. održana je radionica na temu standarda za razmenu poruka u okruženju sa raspodeljenom memorijom (eng. Standards for Message-Passing in a Distributed Memory Environment) [6], na kojoj je započet razvoj standarda koji će se 1994. objaviti pod nazivom MPI (eng. Message Passing Interface). Naknadno su objavljeni standardi MPI 2.0 (1996), MPI 3.0 (2012) i MPI 4.0 (2021).[7]\par
-	Sa druge strane, za programiranje u SMP okruženju, OpenMP ARB (Architecture Review Board) objavljuje prve specifikacije interfejsa OpenMP 1.0 za Fortran u 1997, a sledeće godine i standard za C/C++. Nakon toga, objavljene su i verzije OpenMP 2.0 (2007), 3.0 (2008), 4.0 (2013) i 5.2 (2021), koji se koristi danas. [8]
+	Uz razvoj paralelne obrade, počeo je da se pojavljuje veliki broj interfejsa koji su se do 1990-ih ujedinili u nekoliko standarda. 1992. održana je radionica na temu standarda za razmenu poruka u okruženju sa raspodeljenom memorijom (eng. Standards for Message-Passing in a Distributed Memory Environment) \cite{standardsformessagepassing}, na kojoj je započet razvoj standarda koji će se 1994. objaviti pod nazivom MPI (eng. Message Passing Interface). Naknadno su objavljeni standardi MPI 2.0 (1996), MPI 3.0 (2012) i MPI 4.0 (2021).\cite{mpidocs}\par
+	Sa druge strane, za programiranje u SMP okruženju, OpenMP ARB (Architecture Review Board) objavljuje prve specifikacije interfejsa OpenMP 1.0 za Fortran u 1997, a sledeće godine i standard za C/C++. Nakon toga, objavljene su i verzije OpenMP 2.0 (2007), 3.0 (2008), 4.0 (2013) i 5.2 (2021), koji se koristi danas\cite{opemp5}.
 	
-	\newpage
-	(ovo cu srediti eventualno)
-	[1]https://ei.cs.vt.edu/~history/Parallel.html
-	[2]https://dl.acm.org/doi/pdf/10.1145/1461518.1461527
-	[3]https://dl.acm.org/doi/pdf/10.1145/356683.356688 strana 11
-	[4]http://users.ece.utexas.edu/~bevans/papers/2009/multicore/MulticoreDSPsForIEEESPMFinal.pdf
-	[5]https://dl.acm.org/doi/proceedings/10.1145/1465482?tocHeading=heading14
-	[6]https://technicalreports.ornl.gov/1992/3445603661204.pdf
-	[7]https://www.mpi-forum.org/docs/
-	[8]https://www.openmp.org/wp-content/uploads/OpenMP-API-Specification-5.0.pdf
+	\section{Zaključak}
+	\label{sec:zakljucak}
+	Ovde pišem zaključak. 
+	Ovde pišem zaključak. 
+	Ovde pišem zaključak. 
+	Ovde pišem zaključak. 
+	Ovde pišem zaključak. 
+	Ovde pišem zaključak. 
+	Ovde pišem zaključak. 
+	Ovde pišem zaključak. 
+	Ovde pišem zaključak. 
+	Ovde pišem zaključak. 
+	Ovde pišem zaključak. 
+	Ovde pišem zaključak. 
+	
+	\addcontentsline{toc}{section}{Literatura}
+	\appendix
+	
+	\iffalse
+	\bibliography{seminarski} 
+	\bibliographystyle{plain}
+	\fi
+	
+	\begin{thebibliography}{50}
+		
+		\bibitem{historyofdevelopment} G. V. Wilson. \emph{The History of the Development of Parallel Computing}. CS Dept. NSF-Supported Education Infrastructure Project, 1994. on-line at: https://ei.cs.vt.edu/~history/Parallel.html
+		
+		\bibitem{d825} J. P. Anderson, S. A. Hoffman, J. Shifman, and R. J. Williams. \emph{D825 — A Multiple-Computer System For Command \&Control}. Burroughs Corporation, Pennsylvania, 1962.
+		
+		\bibitem{multiprocessororganizationsurvey} P. H. Enslow Jr. \emph{Multiprocessor Organization — A Survey}. School of Information and Computer Science, Georgia Institute of Technology, Atlanta, Georgia, USA, 1977.
+		
+		\bibitem{springjoint} Proceedings of the April 18-20, 1967, spring joint computer conference. Association for Computing Machinery, New York, NY, USA, 1967.
+		
+		\bibitem{standardsformessagepassing} D. W. Walker. \emph{Standards For Message-Passing in a Distributed Memory Environment}. Mathematical Sciences Section Oak Ridge National Laboratory, Tennessee, USA, 1992.
+		
+		\bibitem{mpidocs} MPI forum, on-line at: https://www.mpi-forum.org/docs/
+		
+		\bibitem{opemp5} OpenMP Architecture Review Board. \emph{OpenMP Application Programming Interface}, on-line at: https://www.openmp.org/wp-content/uploads/OpenMP-API-Specification-5.0.pdf
+		
+		
+		
+	\end{thebibliography}
 \end{document}
