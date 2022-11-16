@@ -7,6 +7,7 @@
 \usepackage[T2A]{fontenc} % enable Cyrillic fonts
 \usepackage[utf8]{inputenc} % make weird characters work
 \usepackage{graphicx}
+\usepackage{listings}
 
 \usepackage[english,serbian]{babel}
 
@@ -51,6 +52,89 @@
 	\subsection{Istorija paralelnog programiranja}
 	Uz razvoj paralelne obrade, počeo je da se pojavljuje veliki broj interfejsa koji su se do 1990-ih ujedinili u nekoliko standarda. 1992. održana je radionica na temu standarda za razmenu poruka u okruženju sa raspodeljenom memorijom (eng. Standards for Message-Passing in a Distributed Memory Environment) \cite{standardsformessagepassing}, na kojoj je započet razvoj standarda koji će se 1994. objaviti pod nazivom MPI (eng. Message Passing Interface). Naknadno su objavljeni standardi MPI 2.0 (1996), MPI 3.0 (2012) i MPI 4.0 (2021)\cite{mpidocs}.\par
 	Sa druge strane, za programiranje u SMP okruženju, OpenMP ARB (Architecture Review Board) objavljuje prve specifikacije interfejsa OpenMP 1.0 za Fortran u 1997, a sledeće godine i standard za C/C++. Nakon toga, objavljene su i verzije OpenMP 2.0 (2007), 3.0 (2008), 4.0 (2013) i 5.2 (2021), koji se koristi danas\cite{opemp5}.
+	
+	\section{Primeri}
+    Danas većina programskih jezika podržava paralelno programiranje, ali, radi jednostavnosti i čitljivosti, koristićemo programski jezik Python. Uz Python standardnu biblioteku dolazi i modul \emph{multiprocessing}, koji omogućava paralelno pokretanje više procesa.
+    \subsection{Primer 1 - Preuzimanje sadržaja u pozadini}
+    Jedna od najčešćih upotreba paralelnog programiranja je izvršavanje neke operacije u pozadini, dok glavni program nesmetano nastavlja sa radom. 
+    \par U ovom primeru prikazan je program koji kreira novi proces, i pomoću njega preuzima prvih 20 cifara broja pi sa određene internet adrese i ispisuje ih. Za to vreme glavni proces nastavlja normalno sa radom.
+    \begin{lstlisting}[showstringspaces=false, language=Python]
+    p = multiprocessing.Process(target=download_pi)
+    p.start()
+    while (True):
+        print("Glavni proces...")
+        time.sleep(0.5)
+    \end{lstlisting}
+    U prvoj liniji koda kreira se proces \emph{p} - objekat klase \lstinline{Process}. Kao argument šaljemo naziv procedure koju proces treba da izvrši. I konačno ga pokrećemo metodom \lstinline{start()}. Program neće čekati da se izvršavanje okonča, nego će nastaviti normalnim tokom. U naredne 3 linije nalazi se petlja koja će da ispisuje određeni tekst na svakih pola sekunde. Ovaj deo postavljen je kako bi prikazao da se procesi izvršavaju paralelno.
+    \par Definicija procedure \lstinline{download_pi} koju proces izvršava:
+    
+    \begin{lstlisting}[showstringspaces=false, language=Python]
+    def download_pi():
+        req = requests.get("https://api.pi.delivery/v1/
+                            pi?start=0&numberOfDigits=20")
+        req = req.json();
+        print("Prvih 20 cifara broja pi:", req["content"])
+    \end{lstlisting}
+    \par Rezultat pokretanja celog programa:
+    \begin{lstlisting}[showstringspaces=false, language=Python]
+    Glavni proces...
+    Glavni proces...
+    Prvih 20 cifara broja pi: 31415926535897932384
+    Glavni proces...
+    ...
+    \end{lstlisting}
+    Vidimo da je paralelizacija uspela, jer bi se u suprotnom prvo završilo izvršavanje procedure \lstinline{download_pi}, pa tek onda program nastavio s radom.
+    \subsection{Primer 2 - Broj prostih brojeva u listi}
+    Nekada je za jedan problem potrebno pokrenuti više procesa. To su obično izuzetno zahtevne komputacije, kao što je, na primer, kriptografija ili kompresija velike količine podataka, ili kompilacija koda. Iako možemo pokrenuti više procesa pojedinačno (slično prethodnom primeru), \lstinline{multiprocessing} pruža mogućnost korišćenja klase \lstinline{Pool}. 
+    \par \lstinline{Pool} predstavlja skup procesa koji će izvršavati isti zadatak. Prilikom inicijalizacije, potrebno je proslediti samo broj procesa, koji ne može biti veći od broja jezgara na procesoru.
+    \par U ovom primeru prikazan je program koji izračunava broj prostih brojeva u nekoj listi brojeva.
+    \begin{lstlisting}[showstringspaces=false, language=Python]
+    pool = multiprocessing.Pool(processes=4)
+    nums_list = generate_list(15000, 9, 12)
+    nums_list = chunks(nums_list, 4)
+    print(sum(pool.map(count_primes, nums_list)))
+    \end{lstlisting}
+    \par U prvoj liniji kreiramo \lstinline{pool}, koji će sadržati 4 procesa.
+    Dalje, generišemo listu \lstinline{nums_list} (pomoću procedure \lstinline{generate_list}), koja će sadržati 15000 nasumičnih brojeva u intervalu $\left [ 10^{9}, 10^{12} \right ]$. 
+    \par S obzirom da se, pri kreiranju procesa, oni "odvajaju" od glavne memorije programa, potrebno je proslediti im podatke na kojima će vršiti komputacije. Da bi program bio što efikasniji, treba podeliti podatke na približno jednake delove. Delova bi trebalo biti onoliko koliko i procesa.
+    U ovom slučaju, koristićemo proceduru \lstinline{chunks}, koja će listu podeliti na 4 približno jednaka dela, i vratiti novu listu koja sadrži te 4 podliste.
+    \par U poslednjoj liniji koristimo metodu \lstinline{map()}, i prosleđujemo joj proceduru \lstinline{count_primes} i listu \lstinline{nums_list}. Ova metoda će u svakom procesu (koji se nalazi unutar skupa \lstinline{pool}) pozvati proceduru \lstinline{count_primes}, dok će kao argument proslediti jedan od elemenata liste \lstinline{nums_list}, odnosno jedan od one 4 podliste. Nakon što svaki od procesa okonča izvršavanje, upisaće rezultat koji dobije u novu listu, koja će imati isto onoliko elemenata koliko i \lstinline{nums_list}, odnosno 4. Procedura \lstinline{sum} sabraće sve elemente novodobijene liste, a \lstinline{print()} će dobijeni zbir ispisati.
+    \par Procedura \lstinline{count_primes} definisana je na sledeći način:
+    \begin{lstlisting}[showstringspaces=false, language=Python]
+    def count_primes(lst):
+        res = 0
+        for x in lst:
+            if is_prime(x): 
+                res += 1
+        return res
+    \end{lstlisting}
+    Za argument prima listu brojeva. Zatim prolazi kroz datu listu, i za svaki broj proverava da li je prost pomoću procedure  \lstinline{is_prime}. Ako je broj prost, promenljiva \lstinline{res}, koja predstavlja broj prostih brojeva u listi, povećava svoju vrednost za 1. 
+    \par Ovako je definisana procedura \lstinline{is_prime}:
+    \begin{lstlisting}[showstringspaces=false, language=Python]
+    def is_prime(n):
+        if n == 1 or n == 2:
+            return True
+        for i in range(2, math.ceil(math.sqrt(n))):
+            if n % i == 0:
+                return False
+        return True
+    \end{lstlisting}
+    Jedini parametar je broj \emph{n} koji se testira. Zatim, za svaki ceo broj \emph{i} u intervalu $\left [ 2, \lceil\sqrt{n} \rceil \right ]$, proveramo da li je ostatak pri deljenju \emph{n} sa \emph{i} jednak nuli. Ako jeste, to znači da \emph{n} nije prost broj, i procedura vraća vrednost \emph{False}. Ako procedura dođe do kraja, a ne vrati \emph{False}, to znači da delilac nije pronađen, te da je broj \emph{n} prost broj.
+    \subsection{Poređenje performansi}
+    Sada ćemo testirati efikasnost paralelnog programiranja. Za to ćemo iskoristiti poslednji primer - brojanje prostih brojeva u listi. Uporedićemo vreme izvršavanja sa 1, 2, 4, 8 i 12 paralelnih procesa.
+    \par Da bi merili vreme izvršavanja, potrebna je samo jedna mala izmena u kodu. Pomoću metode \lstinline{time.time()}, sačuvaćemo vremenski trenutak pre početka izvršavanja glavnog zadatka. Zatim to isto uraditi i tačno nakon izvršenja. Razlika ta dva vremenska trenutna predstavlja vreme izvršavanja zadatka.
+    \begin{lstlisting}[showstringspaces=false, language=Python]
+    start = time.time()
+    print(sum(pool.map(count_primes, nums_list)))
+    print(time.time() - start)
+    \end{lstlisting}
+    Za 5000 nasumičnih brojeva u intervalu $\left [ 10^{9}, 10^{12} \right ]$, i 4 procesa koja izvršavaju zadatak, rezultat je sledeći:
+    \begin{lstlisting}[showstringspaces=false, language=Python]
+    203
+    6.540586948394775
+    \end{lstlisting}
+    Vreme je prikazano u sekundama.
+    \par Ovde ću ubaciti sliku sutra ili prekosutra. I još nešto malo treba da dodam, zaboravio sam šta.
 	
 	\section{Zaključak}
 	\label{sec:zakljucak}
