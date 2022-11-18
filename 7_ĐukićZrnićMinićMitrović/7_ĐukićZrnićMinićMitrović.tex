@@ -28,7 +28,7 @@
 		\and
 		Luka Mitrović\\mi22092@alas.matf.bg.ac.rs
 		\and
-		Marija Zrnić\\email
+		Marija Zrnić\\mi22293@alas.matf.bg.ac.rs
 	}
 	
 	\date{13.~novembar 2022.}
@@ -52,6 +52,52 @@
 	\subsection{Istorija paralelnog programiranja}
 	Uz razvoj paralelne obrade, počeo je da se pojavljuje veliki broj interfejsa koji su se do 1990-ih ujedinili u nekoliko standarda. 1992. održana je radionica na temu standarda za razmenu poruka u okruženju sa raspodeljenom memorijom (eng. Standards for Message-Passing in a Distributed Memory Environment) \cite{standardsformessagepassing}, na kojoj je započet razvoj standarda koji će se 1994. objaviti pod nazivom MPI (eng. Message Passing Interface). Naknadno su objavljeni standardi MPI 2.0 (1996), MPI 3.0 (2012) i MPI 4.0 (2021)\cite{mpidocs}.\par
 	Sa druge strane, za programiranje u SMP okruženju, OpenMP ARB (Architecture Review Board) objavljuje prve specifikacije interfejsa OpenMP 1.0 za Fortran u 1997, a sledeće godine i standard za C/C++. Nakon toga, objavljene su i verzije OpenMP 2.0 (2007), 3.0 (2008), 4.0 (2013) i 5.2 (2021), koji se koristi danas\cite{opemp5}.
+	
+	\section{Upotrebe}
+Sada kada znamo šta je paralelno programiranje možemo da pričamo o tome gde i kada se koristi
+\subsection{Osnovne primene}
+
+Paralelno programiranje koristimo kada imamo velike količine podataka,kompleksne račune ili velike simulacije. Iako paralelno programiranje može biti vremenski intenzivniji napor za programere da kreiraju efikasne paralelne algoritme i kod, ono sveukupno štedi vreme tako što koristi pun potencijal procesora.\\\\Neke od oblasti u kojima paralelno programiranje može biti korisno su:\\
+\begin{itemize}
+\item primenjena fizika\cite{totalview}
+\item napredna grafika\cite{perforce}
+\item elektrotehnika\cite{totalview}
+\item finansijsko i ekonomsko modeliranje\cite{totalview}
+\item molekulsko modeliranje\cite{totalview}
+\item nacionalna bezbednost i nuklearno oružije\cite{totalview}
+\item istraživanje nafte i gasa\cite{totalview}
+\item veštačka inteligencija\cite{perforce}
+\item kvantna mehanika\cite{totalview} i još mnoge druge
+\end{itemize}\\
+
+\subsection{Prednosti i mane}
+
+
+Prednosti paralelnog programiranja su:\\
+
+\begin{itemize}
+\item \textbf{Brzina} - Možemo postići bolje performanse jer su zadaci raspoređeni u thread-ovima koji rade paralelno.\cite{zoboko}
+\item \textbf{Poboljšan GUI} - Pošto zadaci obavljaju neblokirajući I/O, to znači da je GUI thread uvek slobodan da prihvati korisničke unose. Ovo dovodi do boljeg odziva.\cite{zoboko}
+\item \textbf{Istovremeno i paralelno pojavljivanje zadataka koji se pokreću paralelno} - Možemo istovremeno pokrenuti različite logike programiranja.\cite{zoboko}
+\item \textbf{Bolje korišćenje keš memorije korišćenjem resursa i bolje korišćenje CPU resursa} - Zadaci se mogu izvršavati na različitim jezgrima, čime se obezbeđuje maksimalna propusnost.\cite{zoboko}\\
+\end{itemize}
+
+Mane:\\
+
+\begin{itemize}
+\item \textbf{Promena konteksta} - Svaki thread radi na delu vremena koji mu je dodeljen. Kada vremenski odlomak istekne, dešava se promena konteksta, što takođe troši resurse.\cite{zoboko}
+\item \textbf{Nepredvidljivost} - pošto se paralelno programiranje oslanja na CPU jezgra, možemo dobiti različite rezultate na različitim konfigurisanim mašinama. Uvek treba da razumemo da je paralelno programiranje relativan koncept i da nešto što je funkcionisalo za druge može, ali ne mora, raditi za nas.\cite{zoboko}
+\item \textbf{Teško za programiranje} - paralelne programe može biti teško napisati u poređenju sa sinhronim verzijama.\cite{zoboko}
+\item \textbf{Kompleksno otklanjanje grešaka i testiranje} - Korišćenje više thread-ova pomaže da dobijete više od jednog procesora. Ali onda ovi thread-ovi treba da sinhronizuju svoj rad u zajedničkoj memoriji. Ovo može biti teško ispraviti - a još teže bez problema sa istovremenošću\cite{zoboko}.
+Evo dve uobičajene vrste problema sa više thread-ova koje može biti teško pronaći samo testiranjem i otklanjanjem grešaka:
+\begin{enumerate}
+\item \textbf{Data Race} - 
+Data race nastaje kada dva ili više thread-ova pristupaju deljenjim podacima i pokušavaju da ih modifikuju u isto vreme bez odgovarajuće sinhronizacije. Ova vrsta greške može dovesti do kvarova ili oštećenja memorije.\cite{perforce}
+\item \textbf{Deadlock} - 
+Deadlock se javlja kada je više thread-ova blokirano dok se takmiče za resurse. Jedan thread je zaglavljen čekajući drugi thread, koji je zaglavljen čekajući prvi. Ova vrsta greške može dovesti do zaglavljivanja programa.\cite{perforce}
+\end{enumerate}
+\end{itemize}
+
 	
 	\section{Primeri}
     Danas većina programskih jezika podržava paralelno programiranje, ali, radi jednostavnosti i čitljivosti, koristićemo programski jezik Python. Uz Python standardnu biblioteku dolazi i modul \emph{multiprocessing}, koji omogućava paralelno pokretanje više procesa.
@@ -178,6 +224,14 @@
 		\bibitem{mpidocs} MPI forum, on-line at: https://www.mpi-forum.org/docs/
 		
 		\bibitem{opemp5} OpenMP Architecture Review Board. \emph{OpenMP Application Programming Interface}, on-line at: https://www.openmp.org/wp-content/uploads/OpenMP-API-Specification-5.0.pdf
+		
+		\bibitem{totalview} TotalView \emph{What Is Parallel Programming?} by Bill Burns ,on-line at: https://totalview.io/blog/what-is-parallel-programming
+			
+		\bibitem{perforce} Perforce \emph{What Is Parallel Programming and Multithreading (Multithreaded Programming)?} by Richard Bellairs, online at: https://www.perforce.com/blog/qac/multithreading-parallel-programming-c-cpp
+		
+		
+		\bibitem{zoboko} \emph{Hands-On Parallel Programming with C# 8 and .NET Core 3: Build solid enterprise software using task parallelism and multithreading} by Shakti Tanwar, 2019
+		
 		
 		
 		
