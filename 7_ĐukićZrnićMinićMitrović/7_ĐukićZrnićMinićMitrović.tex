@@ -56,7 +56,7 @@
 	Sa druge strane, za programiranje u SMP okruženju, OpenMP ARB (Architecture Review Board) objavljuje prve specifikacije interfejsa OpenMP 1.0 za Fortran u 1997, a sledeće godine i standard za C/C++. Nakon toga, objavljene su i verzije OpenMP 2.0 (2007), 3.0 (2008), 4.0 (2013) i 5.2 (2021), koji se koristi danas\cite{opemp5}.
 	
 	\section{Princip rada paralelnog programiranja}
-	Najosnovnije rečeno, paralelno programiranje radi tako što deli program na više zadataka koji se izvršavaju istovremeno. Da bi bolje razumeli celu sliku ipak, moramo prvo bolje objasniti paralelnu obradu.
+	Opšte rečeno, paralelno programiranje radi tako što deli program na više zadataka koji se izvršavaju istovremeno. Da bi bolje razumeli celu sliku, moramo prvo objasniti paralelnu obradu.
 	\subsection{Osnove paralelne obrade}
 	Paralelna obrada predstavlja sva izračunavanja na računaru koja se izvršavaju paralelno, tj. istovremeno \cite{p98}. Postoje više formi paralelne obrade, od kojih su najvažnije prikazane u narednoj tabeli:\\
 
@@ -72,21 +72,21 @@ Naziv                                                                           
 \end{tabular}\\
 \end{adjustwidth}
 
-Paralelizam se često koristi uz tradicionalno sekvencijalno programiranje, a i zbog gore navedenih mana, postavlja se pitanje, koliko je potencijalno ubrzanje izvršavanja zadataka ako primenimo paralelizam? Zbog ovoga se pominje ranije pomenut Amdalov zakon, koji meri efikasnost izvršavanja programa koji koristi paralelizam. On kaže da celokupan dobitak zavisi od količine vremena prilikom kojeg se zapravo koristi paralelnost (ili druga vrsta ubrzanja izvršavanja operacija). Formula je: \\
+Gore navedene mane i činjenica da se paralelizam često koristi zajedno sa sekvencijalnim programiranjem postavljaju pitanje, koliko je potencijalno ubrzanje izvršavanja zadataka ako primenimo paralelizam? Ovime se bavi ranije pomenut Amdalov zakon, koji meri efikasnost izvršavanja paralelnog programa. On kaže da celokupan dobitak zavisi od količine vremena prilikom kojeg se zapravo koristi paralelnost: \\
 \begin{equation*}
 S_{max} = \frac{1}{(1 - p) + \frac{p}{s}}
 \end{equation*}\\
-Gde je $S_{max}$ maksimalna potencijalna efikasnost, $p$ procenat sistema koji je poboljšan, a $s$ deo vremena u kojem radi poboljšani deo sistema. Kada bi se ova formula iz 1967. primenila danas ipak, naizgled bi paralelnost izgledala kao da ne ostvaruje dovoljno dobru efikasnost, ali uz razvoj tehnologije ipak je slučaj drugačiji. Zbog toga je Džon Gustafson odlučio da ponovo ispita ovaj zakon i došao do svog zaključka, koji prikazuje efikasnost paralelizma tako što upoređuje rad istog zadatka na mašini sa jednim jezgrom:\\
+$S_{max}$ je maksimalna potencijalna efikasnost, $p$ procenat sistema koji je poboljšan, a $s$ deo vremena u kojem radi poboljšani deo sistema. Kada bi se ova formula primenila na moderne računare, naizgled bi paralelnost bila nedovoljno efikasna, ali to nije slučaj. Ovo je primetio Džon Gustafson i ponovo ispitao Amdalov zakon i došao do svog zaključka, koji prikazuje efikasnost paralelizma tako što upoređuje rad istog zadatka na mašini sa jednim jezgrom:\\
 \begin{equation*}
 S_{max} = N + (1 - N) * s
 \end{equation*}\\
 Gde je $S_{max}$ maksimalna potencijalna efikasnost, $N$ broj procesora koji obrađuje podatke, a $s$ vreme za koje se zadatak obradi sekvencijalno.
 \subsection{Koraci paralelizacije programa}
 Sada kada znamo principe paralelne obrade, možemo komentarisati o koracima koji vode do kreiranja paralelnog programa. To su: dekompozicija, dodela, orkestracija i mapiranje.\par
-Dekompozicija prvo razdvaja obradu na više zadataka koji se kasnije dele među procesima. Traži paralelizam i koliko može da ga iskoristi. Cilj je kreirati dovoljno zadataka da bi procesori ih istovremeno izvršavali, pri čemu je broj zadataka gornje ograničen sa mogućim ubrzanjem rada, a njihov broj u jednom trenutku može da varira i mogu nastajati dinamički.\par 
+Dekompozicija prvo razdvaja obradu na više zadataka koji se kasnije dele među procesima. Traži paralelizam i koliko može da ga iskoristi. Cilj je kreirati dovoljno zadataka da bi ih procesori istovremeno izvršavali, pri čemu zadaci mogu nastajati dinamički i njihov broj može da varira.\par 
 Kod dodele se određuje mehanizam koji deli zadatke iz prethodnog koraka među procesima. Cilj je da balansira rad, a i smanji troškove komunikacije i menadžmenta. Zajedno sa dekompozicijom ova dva koraka su poznata kao particionisanje, tj. raspodela više različitih zadataka na više procesa. \par 
-Orkestracija se bavi struktuiranjem komunikacije, imenovanjem podataka, sinhronizacijom i generalno organizacijom rada. Svrha je da smanji trošak vremena tokom komunikacije i sinhronizacije, sačuva strukturu podataka i njihove lokalne reference, postara se da se zadaci izvršavaju po određenom rasporedu tako da ne dođe do preopterećenja ili manjka zadataka koji se izvršavaju. \par 
-Nakon ovog koraka, već imamo paralelni program, ali mapiranje je tu da reguliše koji procesi će biti izvršavani na istom procesu, kao i koji procesi će se izvršavati na nekom specifičnom procesoru generalno. 
+Orkestracija smanjuje trošak komunikacije i sinhronizacije, imenuje podatke, čuva strukture podataka i njihove lokalne reference, organizuje rad, pravi raspored izvršavanja zadataka tako da ne dođe do preopterećenja ili manjka zadataka koji se trenutno izvršavaju. \par 
+Nakon ovog koraka, već imamo paralelni program, ali mapiranje je tu da reguliše koji procesi će biti izvršavani na istom procesoru, kao i koji procesi će se izvršavati na nekom specifičnom procesoru generalno. 
 \subsection{Modeli paralelnog programiranja}
 Termin komunikacija se često pominje tokom koraka paralelizacije, a on se zapravo odnosi na razmenjivanje podataka između procesa koji se trenutno izvršavaju \cite{models}. Na osnovu ovoga nastalo je nekoliko modela, od kojih su najvažniji: \\
 \begin{itemize}
@@ -110,7 +110,7 @@ Paralelno programiranje koristimo kada imamo velike količine podataka,kompleksn
 \item istraživanje nafte i gasa\cite{totalview}
 \item veštačka inteligencija\cite{perforce}
 \item kvantna mehanika\cite{totalview} i još mnoge druge
-\end{itemize}\\
+\end{itemize}
 
 \subsection{Prednosti i mane}
 
