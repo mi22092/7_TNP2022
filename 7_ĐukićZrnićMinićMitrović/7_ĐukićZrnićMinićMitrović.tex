@@ -8,6 +8,8 @@
 \usepackage[utf8]{inputenc} % make weird characters work
 \usepackage{graphicx}
 \usepackage{listings}
+\usepackage{changepage}
+\usepackage{amsmath}
 
 \usepackage[english,serbian]{babel}
 
@@ -22,7 +24,7 @@
 	
 	\author
 	{
-		Aleksandar Đukić\\email
+		Aleksandar Đukić\\mi22144@alas.matf.bg.ac.rs
 		\and
 		Iva Minić\\mi22153@alas.matf.bg.ac.rs
 		\and
@@ -52,6 +54,46 @@
 	\subsection{Istorija paralelnog programiranja}
 	Uz razvoj paralelne obrade, počeo je da se pojavljuje veliki broj interfejsa koji su se do 1990-ih ujedinili u nekoliko standarda. 1992. održana je radionica na temu standarda za razmenu poruka u okruženju sa raspodeljenom memorijom (eng. Standards for Message-Passing in a Distributed Memory Environment) \cite{standardsformessagepassing}, na kojoj je započet razvoj standarda koji će se 1994. objaviti pod nazivom MPI (eng. Message Passing Interface). Naknadno su objavljeni standardi MPI 2.0 (1996), MPI 3.0 (2012) i MPI 4.0 (2021)\cite{mpidocs}.\par
 	Sa druge strane, za programiranje u SMP okruženju, OpenMP ARB (Architecture Review Board) objavljuje prve specifikacije interfejsa OpenMP 1.0 za Fortran u 1997, a sledeće godine i standard za C/C++. Nakon toga, objavljene su i verzije OpenMP 2.0 (2007), 3.0 (2008), 4.0 (2013) i 5.2 (2021), koji se koristi danas\cite{opemp5}.
+	
+	\section{Princip rada paralelnog programiranja}
+	Najosnovnije rečeno, paralelno programiranje radi tako što deli program na više zadataka koji se izvršavaju istovremeno. Da bi bolje razumeli celu sliku ipak, moramo prvo bolje objasniti paralelnu obradu.
+	\subsection{Osnove paralelne obrade}
+	Paralelna obrada predstavlja sva izračunavanja na računaru koja se izvršavaju paralelno, tj. istovremeno \cite{p98}. Postoje više formi paralelne obrade, od kojih su najvažnije prikazane u narednoj tabeli:\\
+
+	
+\begin{adjustwidth}{-2cm}{}
+\begin{tabular}{|c|c|c|}
+\hline
+Naziv                                                                                  & Opis                                                                                                                                                                                                                                                                                                           & Mane                                                                                                                                                                                   \\ \hline
+\begin{tabular}[c]{@{}c@{}}Nivo bita\\ (eng. bit-level)\end{tabular}                   & \begin{tabular}[c]{@{}c@{}}Zasniva se na proširenju  veličine \\ procesorske reči (osnovna jedinica podataka \\ koju koristi određeni  dizajn procesora). \\ Koristi se u slučaju kada je broj bitova \\ podatka kojeg je potrebno obraditi \\ veći nego što procesor podržava za jednu\\ obradu.\end{tabular} & \begin{tabular}[c]{@{}c@{}}Trošak vremena i hardvera, \\ tehnike eksploatacije ne \\ ostvaraju pun potencijal\end{tabular}                                                             \\ \hline
+\begin{tabular}[c]{@{}c@{}}Nivo naredbe\\ (eng. instruction level)\end{tabular}        & \begin{tabular}[c]{@{}c@{}}Predstavlja istovremeno \\ izvršavanje niza naredbi. \\ Daje prosečan broj naredbi koje\\ se izvršavaju pri svakom \\ koraku paralelne obrade \cite{ILP}.\end{tabular}                                                                                                                         & \begin{tabular}[c]{@{}c@{}}Ograničeno od zavisnosti \\ kontrole i podataka\end{tabular}                                                                                                \\ \hline
+\begin{tabular}[c]{@{}c@{}}Paralelizam podataka\\ (eng. data parallelism)\end{tabular} & \begin{tabular}[c]{@{}c@{}}Deli podatke na više procesora \\ tako da se nad njima vrši \\ isti zadatak istovremeno \cite{dataandtaskparallel}.\end{tabular}                                                                                                                                                                               & \begin{tabular}[c]{@{}c@{}}Mogu nastati problemi tokom\\  nepravilne manipulacije podacima, \\ ograničeno je sa količinom \\ podataka koji mogu da\\ protiču iz memorije.\end{tabular} \\ \hline
+\begin{tabular}[c]{@{}c@{}}Paralelizam zadataka\\ (eng. task parallelism)\end{tabular} & \begin{tabular}[c]{@{}c@{}}U kontrastu sa paralelizmom podataka, \\ ovde se dele zadaci koji \\ se izvršavaju nad \\ jednim podatkom istovremeno \cite{dataandtaskparallel}.\end{tabular}                                                                                                                                                 & \begin{tabular}[c]{@{}c@{}}Ograničeno troškovima \\ komunikacije i sinhronizacije\end{tabular}                                                                                         \\ \hline
+\end{tabular}\\
+\end{adjustwidth}
+
+Paralelizam se često koristi uz tradicionalno sekvencijalno programiranje, a i zbog gore navedenih mana, postavlja se pitanje, koliko je potencijalno ubrzanje izvršavanja zadataka ako primenimo paralelizam? Zbog ovoga se pominje ranije pomenut Amdalov zakon, koji meri efikasnost izvršavanja programa koji koristi paralelizam. On kaže da celokupan dobitak zavisi od količine vremena prilikom kojeg se zapravo koristi paralelnost (ili druga vrsta ubrzanja izvršavanja operacija). Formula je: \\
+\begin{equation*}
+S_{max} = \frac{1}{(1 - p) + \frac{p}{s}}
+\end{equation*}\\
+Gde je $S_{max}$ maksimalna potencijalna efikasnost, $p$ procenat sistema koji je poboljšan, a $s$ deo vremena u kojem radi poboljšani deo sistema. Kada bi se ova formula iz 1967. primenila danas ipak, naizgled bi paralelnost izgledala kao da ne ostvaruje dovoljno dobru efikasnost, ali uz razvoj tehnologije ipak je slučaj drugačiji. Zbog toga je Džon Gustafson odlučio da ponovo ispita ovaj zakon i došao do svog zaključka, koji prikazuje efikasnost paralelizma tako što upoređuje rad istog zadatka na mašini sa jednim jezgrom:\\
+\begin{equation*}
+S_{max} = N + (1 - N) * s
+\end{equation*}\\
+Gde je $S_{max}$ maksimalna potencijalna efikasnost, $N$ broj procesora koji obrađuje podatke, a $s$ vreme za koje se zadatak obradi sekvencijalno.
+\subsection{Koraci paralelizacije programa}
+Sada kada znamo principe paralelne obrade, možemo komentarisati o koracima koji vode do kreiranja paralelnog programa. To su: dekompozicija, dodela, orkestracija i mapiranje.\par
+Dekompozicija prvo razdvaja obradu na više zadataka koji se kasnije dele među procesima. Traži paralelizam i koliko može da ga iskoristi. Cilj je kreirati dovoljno zadataka da bi procesori ih istovremeno izvršavali, pri čemu je broj zadataka gornje ograničen sa mogućim ubrzanjem rada, a njihov broj u jednom trenutku može da varira i mogu nastajati dinamički.\par 
+Kod dodele se određuje mehanizam koji deli zadatke iz prethodnog koraka među procesima. Cilj je da balansira rad, a i smanji troškove komunikacije i menadžmenta. Zajedno sa dekompozicijom ova dva koraka su poznata kao particionisanje, tj. raspodela više različitih zadataka na više procesa. \par 
+Orkestracija se bavi struktuiranjem komunikacije, imenovanjem podataka, sinhronizacijom i generalno organizacijom rada. Svrha je da smanji trošak vremena tokom komunikacije i sinhronizacije, sačuva strukturu podataka i njihove lokalne reference, postara se da se zadaci izvršavaju po određenom rasporedu tako da ne dođe do preopterećenja ili manjka zadataka koji se izvršavaju. \par 
+Nakon ovog koraka, već imamo paralelni program, ali mapiranje je tu da reguliše koji procesi će biti izvršavani na istom procesu, kao i koji procesi će se izvršavati na nekom specifičnom procesoru generalno. 
+\subsection{Modeli paralelnog programiranja}
+Termin komunikacija se često pominje tokom koraka paralelizacije, a on se zapravo odnosi na razmenjivanje podataka između procesa koji se trenutno izvršavaju \cite{models}. Na osnovu ovoga nastalo je nekoliko modela, od kojih su najvažniji: \\
+\begin{itemize}
+\item Model deljene memorije (eng. shared memory model) - Kod ovog modela svi procesi imaju pristup jednom glavnom delu programa koji sadrži sve podatke. Procesi mogu asinhrono da čitaju i pišu u ovoj međusobno deljenoj memoriji. Ipak, zbog toga mogu nastati problemi kao što je data race, o čemu će biti reči kasnije.
+\item Model prenošenja poruke (eng. message passing model) - U ovom modelu, procesi koji se paralelno izvršavaju šalju jedni drugima podatke preko poruka, koje mogu biti asinhrone (primalac dobija poruku i da nije spreman na to) i sinrhone (obe strane su u trenutku slobodne da pošalju i prime poruku).
+\item Particionisani globalni adresni prostor (eng. partitioned global address space) - Model koji je hibrid prethodna dva, gde se koristi deljena memorija, međutim ovaj put je ona particionisana tako da svaki proces ima pristup samo određenim tačkama u memoriji, umesto celokupnom prostoru. Podaci se razmenjuju pisanjem i čitanjem iz datog dela memorije.
+\end{itemize}
 	
 	\section{Upotrebe}
 Sada kada znamo šta je paralelno programiranje možemo da pričamo o tome gde i kada se koristi
@@ -230,9 +272,17 @@ Deadlock se javlja kada je više thread-ova blokirano dok se takmiče za resurse
 		\bibitem{perforce} Perforce \emph{What Is Parallel Programming and Multithreading (Multithreaded Programming)?} by Richard Bellairs, online at: https://www.perforce.com/blog/qac/multithreading-parallel-programming-c-cpp
 		
 		
-		\bibitem{zoboko} \emph{Hands-On Parallel Programming with C# 8 and .NET Core 3: Build solid enterprise software using task parallelism and multithreading} by Shakti Tanwar, 2019
+		\bibitem{zoboko} \emph{Hands-On Parallel Programming with C\# 8 and .NET Core 3: Build solid enterprise software using task parallelism and multithreading} by Shakti Tanwar, 2019
 		
+		\bibitem{p98} Dr. Daniel C. Hyde. \emph{Introduction to the
+Principles of Parallel Computation.} Bucknell University, Lewisburg, 1995.
+
+		\bibitem{ILP} Bernard Goossens, Philippe Langlois, David Parello and Eric Petit. \emph{PerPI: A Tool to Measure Instruction Level Parallelism.} DALI Research Team, University of Perpignan Via Domitia, France
+ 
+		\bibitem{dataandtaskparallel} ZDNet, James Reinders. \emph{Understanding task and data parallelism.} on-line at: https://www.zdnet.com/article/understanding-task-and-data-parallelism-3039289129/
 		
+		\bibitem{models} Christoph Kessler and J\"{o}rg Keller. \emph{Models for Parallel Computing: Review and Perspectives.}  Dept. of Computer Science (IDA)
+Link\"{o}ping university, Sweden, Dept. of Mathematics and Computer Science, Fernuniversit\"{a}t Hagen, Germany, December 2007.
 		
 		
 	\end{thebibliography}
