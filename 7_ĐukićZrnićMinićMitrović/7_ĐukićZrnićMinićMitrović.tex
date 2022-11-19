@@ -99,44 +99,37 @@ Termin komunikacija se često pominje tokom koraka paralelizacije, a on se zapra
 Sada kada znamo šta je paralelno programiranje možemo da pričamo o tome gde i kada se koristi
 \subsection{Osnovne primene}
 
-Paralelno programiranje koristimo kada imamo velike količine podataka,kompleksne račune ili velike simulacije. Iako paralelno programiranje može biti vremenski intenzivniji napor za programere da kreiraju efikasne paralelne algoritme i kod, ono sveukupno štedi vreme tako što koristi pun potencijal procesora.\\\\Neke od oblasti u kojima paralelno programiranje može biti korisno su:\\
+Paralelno programiranje koristimo kada imamo velike količine podataka,kompleksne račune ili velike simulacije. Iako paralelno programiranje može biti vremenski intenzivniji napor za programere da kreiraju efikasne paralelne algoritme i kod, ono sveukupno štedi vreme tako što koristi pun potencijal procesora.\\\\Neke od oblasti u kojima paralelno programiranje može biti korisno su:
 \begin{itemize}
 \item primenjena fizika\cite{totalview}
-\item napredna grafika\cite{perforce}
 \item elektrotehnika\cite{totalview}
 \item finansijsko i ekonomsko modeliranje\cite{totalview}
-\item molekulsko modeliranje\cite{totalview}
 \item nacionalna bezbednost i nuklearno oružije\cite{totalview}
-\item istraživanje nafte i gasa\cite{totalview}
 \item veštačka inteligencija\cite{perforce}
 \item kvantna mehanika\cite{totalview} i još mnoge druge
 \end{itemize}
 
 \subsection{Prednosti i mane}
 
-
-Prednosti paralelnog programiranja su:\\
-
+Prednosti paralelnog programiranja su:
 \begin{itemize}
-\item \textbf{Brzina} - Možemo postići bolje performanse jer su zadaci raspoređeni u thread-ovima koji rade paralelno.\cite{zoboko}
-\item \textbf{Poboljšan GUI} - Pošto zadaci obavljaju neblokirajući I/O, to znači da je GUI thread uvek slobodan da prihvati korisničke unose. Ovo dovodi do boljeg odziva.\cite{zoboko}
+\item \textbf{Brzina} - Možemo postići bolje performanse jer su zadaci raspoređeni u nitima koje rade paralelno.\cite{zoboko}
+\item \textbf{Poboljšan GUI} - Pošto zadaci obavljaju neblokirajući I/O, to znači da je GUI nit uvek slobodna da prihvati korisničke unose. Ovo dovodi do boljeg odziva.\cite{zoboko}
 \item \textbf{Istovremeno i paralelno pojavljivanje zadataka koji se pokreću paralelno} - Možemo istovremeno pokrenuti različite logike programiranja.\cite{zoboko}
 \item \textbf{Bolje korišćenje keš memorije korišćenjem resursa i bolje korišćenje CPU resursa} - Zadaci se mogu izvršavati na različitim jezgrima, čime se obezbeđuje maksimalna propusnost.\cite{zoboko}\\
 \end{itemize}
-
-Mane:\\
-
+Mane:
 \begin{itemize}
-\item \textbf{Promena konteksta} - Svaki thread radi na delu vremena koji mu je dodeljen. Kada vremenski odlomak istekne, dešava se promena konteksta, što takođe troši resurse.\cite{zoboko}
-\item \textbf{Nepredvidljivost} - pošto se paralelno programiranje oslanja na CPU jezgra, možemo dobiti različite rezultate na različitim konfigurisanim mašinama. Uvek treba da razumemo da je paralelno programiranje relativan koncept i da nešto što je funkcionisalo za druge može, ali ne mora, raditi za nas.\cite{zoboko}
+\item \textbf{Promena konteksta} - svaka nit radi na delu vremena koji joj je dodeljen. Kada vremenski odlomak istekne, dešava se promena konteksta, što takođe troši resurse.\cite{zoboko}
+\item \textbf{Nepredvidljivost} - pošto se paralelno programiranje oslanja na CPU jezgra, možemo dobiti različite rezultate na različitim konfigurisanim mašinama.\cite{zoboko}
 \item \textbf{Teško za programiranje} - paralelne programe može biti teško napisati u poređenju sa sinhronim verzijama.\cite{zoboko}
-\item \textbf{Kompleksno otklanjanje grešaka i testiranje} - Korišćenje više thread-ova pomaže da dobijete više od jednog procesora. Ali onda ovi thread-ovi treba da sinhronizuju svoj rad u zajedničkoj memoriji. Ovo može biti teško ispraviti - a još teže bez problema sa istovremenošću\cite{zoboko}.
-Evo dve uobičajene vrste problema sa više thread-ova koje može biti teško pronaći samo testiranjem i otklanjanjem grešaka:
+\item \textbf{Kompleksno otklanjanje grešaka i testiranje} - korišćenje više niti pomaže da dobijete više od jednog procesora. Ali onda ove niti treba da sinhronizuju svoj rad u zajedničkoj memoriji. Ovo može biti teško ispraviti - a još teže bez problema sa istovremenošću\cite{zoboko}.
+Evo dve uobičajene vrste problema sa više niti koje može biti teško pronaći samo testiranjem i otklanjanjem grešaka:
 \begin{enumerate}
 \item \textbf{Data Race} - 
-Data race nastaje kada dva ili više thread-ova pristupaju deljenjim podacima i pokušavaju da ih modifikuju u isto vreme bez odgovarajuće sinhronizacije. Ova vrsta greške može dovesti do kvarova ili oštećenja memorije.\cite{perforce}
+Data race nastaje kada dve ili više niti pristupaju deljenjim podacima i pokušavaju da ih modifikuju u isto vreme bez odgovarajuće sinhronizacije. Ova vrsta greške može dovesti do kvarova ili oštećenja memorije.\cite{perforce}
 \item \textbf{Deadlock} - 
-Deadlock se javlja kada je više thread-ova blokirano dok se takmiče za resurse. Jedan thread je zaglavljen čekajući drugi thread, koji je zaglavljen čekajući prvi. Ova vrsta greške može dovesti do zaglavljivanja programa.\cite{perforce}
+Deadlock se javlja kada je više niti blokirano dok se takmiče za resurse. Jedna nit je zaglavljena čekajući drugu nit, koja je zaglavljena čekajući prvu. Ova vrsta greške može dovesti do zaglavljivanja programa.\cite{perforce}
 \end{enumerate}
 \end{itemize}
 
