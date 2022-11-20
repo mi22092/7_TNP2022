@@ -7,6 +7,7 @@
 \usepackage[T2A]{fontenc} % enable Cyrillic fonts
 \usepackage[utf8]{inputenc} % make weird characters work
 \usepackage{graphicx}
+\graphicspath{{slike/}}
 \usepackage{listings}
 \usepackage{changepage}
 \usepackage{amsmath}
@@ -38,7 +39,7 @@
 	
 	\abstract{
 		Ovde ide tekst ovde ide tekst ovde ide tekst ovde ide tekst ovde ide tekst ovde ide tekst ovde ide tekst ovde ide tekst ovde ide tekst ovde ide tekst ovde ide tekst ovde ide tekst ovde ide tekst ovde ide tekst
-		
+		}
 		\tableofcontents
 		
 	\newpage
@@ -158,7 +159,7 @@ Deadlock se javlja kada je više niti blokirano dok se takmiče za resurse. Jedn
     \end{lstlisting}
     Vidimo da je paralelizacija uspela, jer bi se u suprotnom prvo završilo izvršavanje procedure \lstinline{download_pi}, pa tek onda program nastavio s radom.
     \subsection{Primer 2 - Broj prostih brojeva u listi}
-    Nekada je za jedan problem potrebno pokrenuti više procesa. To su obično izuzetno zahtevne komputacije, kao što je, na primer, kriptografija ili kompresija velike količine podataka, ili kompilacija koda. Iako možemo pokrenuti više procesa pojedinačno (slično prethodnom primeru), \lstinline{multiprocessing} pruža mogućnost korišćenja klase \lstinline{Pool}. 
+    Nekada je za jedan problem potrebno pokrenuti više procesa. To su obično izuzetno zahtevne komputacije, kao što je, na primer, kriptografija ili kompresija velike količine podataka, ili kompilacija koda. Iako možemo pokrenuti više procesa pojedinačno (slično prethodnom primeru), \emph{multiprocessing} pruža mogućnost korišćenja klase \lstinline{Pool}. 
     \par \lstinline{Pool} predstavlja skup procesa koji će izvršavati isti zadatak. Prilikom inicijalizacije, potrebno je proslediti samo broj procesa, koji ne može biti veći od broja jezgara na procesoru.
     \par U ovom primeru prikazan je program koji izračunava broj prostih brojeva u nekoj listi brojeva.
     \begin{lstlisting}[showstringspaces=false, language=Python]
@@ -169,30 +170,9 @@ Deadlock se javlja kada je više niti blokirano dok se takmiče za resurse. Jedn
     \end{lstlisting}
     \par U prvoj liniji kreiramo \lstinline{pool}, koji će sadržati 4 procesa.
     Dalje, generišemo listu \lstinline{nums_list} (pomoću procedure \lstinline{generate_list}), koja će sadržati 15000 nasumičnih brojeva u intervalu $\left [ 10^{9}, 10^{12} \right ]$. 
-    \par S obzirom da se, pri kreiranju procesa, oni "odvajaju" od glavne memorije programa, potrebno je proslediti im podatke na kojima će vršiti komputacije. Da bi program bio što efikasniji, treba podeliti podatke na približno jednake delove. Delova bi trebalo biti onoliko koliko i procesa.
+    \par S obzirom da se, pri kreiranju procesa, oni ``odvajaju'' od glavne memorije programa, potrebno je proslediti im podatke na kojima će vršiti komputacije. Da bi program bio što efikasniji, treba podeliti podatke na približno jednake delove. Delova bi trebalo biti onoliko koliko i procesa.
     U ovom slučaju, koristićemo proceduru \lstinline{chunks}, koja će listu podeliti na 4 približno jednaka dela, i vratiti novu listu koja sadrži te 4 podliste.
     \par U poslednjoj liniji koristimo metodu \lstinline{map()}, i prosleđujemo joj proceduru \lstinline{count_primes} i listu \lstinline{nums_list}. Ova metoda će u svakom procesu (koji se nalazi unutar skupa \lstinline{pool}) pozvati proceduru \lstinline{count_primes}, dok će kao argument proslediti jedan od elemenata liste \lstinline{nums_list}, odnosno jedan od one 4 podliste. Nakon što svaki od procesa okonča izvršavanje, upisaće rezultat koji dobije u novu listu, koja će imati isto onoliko elemenata koliko i \lstinline{nums_list}, odnosno 4. Procedura \lstinline{sum} sabraće sve elemente novodobijene liste, a \lstinline{print()} će dobijeni zbir ispisati.
-    \par Procedura \lstinline{count_primes} definisana je na sledeći način:
-    \begin{lstlisting}[showstringspaces=false, language=Python]
-    def count_primes(lst):
-        res = 0
-        for x in lst:
-            if is_prime(x): 
-                res += 1
-        return res
-    \end{lstlisting}
-    Za argument prima listu brojeva. Zatim prolazi kroz datu listu, i za svaki broj proverava da li je prost pomoću procedure  \lstinline{is_prime}. Ako je broj prost, promenljiva \lstinline{res}, koja predstavlja broj prostih brojeva u listi, povećava svoju vrednost za 1. 
-    \par Ovako je definisana procedura \lstinline{is_prime}:
-    \begin{lstlisting}[showstringspaces=false, language=Python]
-    def is_prime(n):
-        if n == 1 or n == 2:
-            return True
-        for i in range(2, math.ceil(math.sqrt(n))):
-            if n % i == 0:
-                return False
-        return True
-    \end{lstlisting}
-    Jedini parametar je broj \emph{n} koji se testira. Zatim, za svaki ceo broj \emph{i} u intervalu $\left [ 2, \lceil\sqrt{n} \rceil \right ]$, proveramo da li je ostatak pri deljenju \emph{n} sa \emph{i} jednak nuli. Ako jeste, to znači da \emph{n} nije prost broj, i procedura vraća vrednost \emph{False}. Ako procedura dođe do kraja, a ne vrati \emph{False}, to znači da delilac nije pronađen, te da je broj \emph{n} prost broj.
     \subsection{Poređenje performansi}
     Sada ćemo testirati efikasnost paralelnog programiranja. Za to ćemo iskoristiti poslednji primer - brojanje prostih brojeva u listi. Uporedićemo vreme izvršavanja sa 1, 2, 4, 8 i 12 paralelnih procesa.
     \par Da bi merili vreme izvršavanja, potrebna je samo jedna mala izmena u kodu. Pomoću metode \lstinline{time.time()}, sačuvaćemo vremenski trenutak pre početka izvršavanja glavnog zadatka. Zatim to isto uraditi i tačno nakon izvršenja. Razlika ta dva vremenska trenutna predstavlja vreme izvršavanja zadatka.
@@ -206,8 +186,14 @@ Deadlock se javlja kada je više niti blokirano dok se takmiče za resurse. Jedn
     203
     6.540586948394775
     \end{lstlisting}
-    Vreme je prikazano u sekundama.
-    \par Ovde ću ubaciti sliku sutra ili prekosutra. I još nešto malo treba da dodam, zaboravio sam šta.
+    \par Vreme je prikazano u sekundama. 
+    \begin{figure}[h]
+    \caption{Brzina izvršavanja u odnosu na broj procesa}
+    \begin{center}
+    \includegraphics[scale=0.3]{grafik}
+    \end{center}
+    \par Na slici iznad prikazane su brzine izvršavanja u odnosu na broj procesa. Može se primetiti da je program efikasniji što više procesa koristi.
+    \end{figure}
 	
 	\section{Zaključak}
 	\label{sec:zakljucak}
