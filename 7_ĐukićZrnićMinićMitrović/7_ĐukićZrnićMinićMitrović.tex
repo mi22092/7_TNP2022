@@ -38,7 +38,8 @@
 	\maketitle
 	
 	\abstract{
-		Paralelno programiranje predstavlja proces ubrzavanja izvršavanja nekog programa, postignut deljenjem zadataka na više delova. Ovaj rad će se baviti istorijom razvoja paralelnog programiranja, osnovnim principima rada, upotrebi i primerima u programskom jeziku Python.
+		Paralelno programiranje predstavlja proces ubrzavanja izvršavanja nekog programa, postignut deljenjem zadataka na više delova. Iako ima veliku primenu, decenijama se vode debate o ukupnom ubrzanju koje se postiže primenom paralelnog programiranja. Zbog toga se ovaj rad bavi pregledom istorije, osnovnim principima rada i primenom paralelnog programiranja i pokazuje primere u programskom jeziku Python radi dokaza efikasnosti i da, iako ubrzava izvršavanje, nije uvek rešenje za problem.\par 
+	\textbf{Ključne reči: }Paralelno programiranje, paralelna obrada, efikasnost programa 
 	}
 		\tableofcontents
 		
@@ -59,21 +60,24 @@
 	\section{Princip rada paralelnog programiranja}
 	Opšte rečeno, paralelno programiranje radi tako što deli program na više zadataka koji se izvršavaju istovremeno. Da bi bolje razumeli celu sliku, moramo prvo objasniti paralelnu obradu.
 	\subsection{Osnove paralelne obrade}
-	Paralelna obrada predstavlja sva izračunavanja na računaru koja se izvršavaju paralelno, tj. istovremeno \cite{p98}. Postoje više formi paralelne obrade, od kojih su najvažnije prikazane u narednoj tabeli:\\
+	Paralelna obrada predstavlja sva izračunavanja na računaru koja se izvršavaju paralelno, tj. istovremeno \cite{p98}. Postoji više formi paralelne obrade. Kratak pregled najbitnijih formi prikazan je u tabeli \ref{tab:tabela1}.\\
 
-	
-\begin{adjustwidth}{-2cm}{}
-\begin{tabular}{|c|c|c|}
+\begin{table}[h!]
+\begin{center}
+\caption{Forme paralelne obrade i njihovi opisi}
+\label{tab:tabela1}
+\begin{tabular}{|c|c|}
 \hline
-Naziv                                                                                  & Opis                                                                                                                                                                                                                                                                                                           & Mane                                                                                                                                                                                   \\ \hline
-\begin{tabular}[c]{@{}c@{}}Nivo bita\\ (eng. bit-level)\end{tabular}                   & \begin{tabular}[c]{@{}c@{}}Zasniva se na proširenju  veličine \\ procesorske reči (osnovna jedinica podataka \\ koju koristi određeni  dizajn procesora). \\ Koristi se u slučaju kada je broj bitova \\ podatka kojeg je potrebno obraditi \\ veći nego što procesor podržava za jednu\\ obradu.\end{tabular} & \begin{tabular}[c]{@{}c@{}}Trošak vremena i hardvera, \\ tehnike eksploatacije ne \\ ostvaraju pun potencijal\end{tabular}                                                             \\ \hline
-\begin{tabular}[c]{@{}c@{}}Nivo naredbe\\ (eng. instruction level)\end{tabular}        & \begin{tabular}[c]{@{}c@{}}Predstavlja istovremeno \\ izvršavanje niza naredbi. \\ Daje prosečan broj naredbi koje\\ se izvršavaju pri svakom \\ koraku paralelne obrade \cite{ILP}.\end{tabular}                                                                                                                         & \begin{tabular}[c]{@{}c@{}}Ograničeno od zavisnosti \\ kontrole i podataka\end{tabular}                                                                                                \\ \hline
-\begin{tabular}[c]{@{}c@{}}Paralelizam podataka\\ (eng. data parallelism)\end{tabular} & \begin{tabular}[c]{@{}c@{}}Deli podatke na više procesora \\ tako da se nad njima vrši \\ isti zadatak istovremeno \cite{dataandtaskparallel}.\end{tabular}                                                                                                                                                                               & \begin{tabular}[c]{@{}c@{}}Mogu nastati problemi tokom\\  nepravilne manipulacije podacima, \\ ograničeno je sa količinom \\ podataka koji mogu da\\ protiču iz memorije.\end{tabular} \\ \hline
-\begin{tabular}[c]{@{}c@{}}Paralelizam zadataka\\ (eng. task parallelism)\end{tabular} & \begin{tabular}[c]{@{}c@{}}U kontrastu sa paralelizmom podataka, \\ ovde se dele zadaci koji \\ se izvršavaju nad \\ jednim podatkom istovremeno \cite{dataandtaskparallel}.\end{tabular}                                                                                                                                                 & \begin{tabular}[c]{@{}c@{}}Ograničeno troškovima \\ komunikacije i sinhronizacije\end{tabular}                                                                                         \\ \hline
-\end{tabular}\\
-\end{adjustwidth}
+Naziv                                                                                  & Opis                                                                                                                                                                                                                                                                                        \\ \hline
+\begin{tabular}[c]{@{}c@{}}Nivo bita\\ (eng. bit-level)\end{tabular}                   & \begin{tabular}[c]{@{}c@{}}Zasniva se na proširenju \\ veličine procesorske reči \\ (osnovna jedinica podataka \\ kod procesora).\\ Koristi se u slučaju kada\\  je broj bitova\\ podataka kojeg je \\ potrebno obraditi veći nego\\  što procesor podržava\\ za jednu obradu.\end{tabular} \\ \hline
+\begin{tabular}[c]{@{}c@{}}Nivo naredbe\\ (eng. instruction level)\end{tabular}        & \begin{tabular}[c]{@{}c@{}}Predstavlja istovremeno \\ izvršavanje niza naredbi. \\ Daje prosečan broj naredbi \\ koje se izvršavaju pri \\ svakom koraku paralelne obrade \cite{ILP}.\end{tabular}                                                                                                     \\ \hline
+\begin{tabular}[c]{@{}c@{}}Paralelizam podataka\\ (eng. data parallelism)\end{tabular} & \begin{tabular}[c]{@{}c@{}}Deli podatke na više procesora \\ tako da se nad njima vrši isti \\ zadatak istovremeno \cite{dataandtaskparallel}.\end{tabular}                                                                                                                                                            \\ \hline
+\begin{tabular}[c]{@{}c@{}}Paralelizam zadataka\\ (eng. task parallelism)\end{tabular} & \begin{tabular}[c]{@{}c@{}}U kontrastu sa paralelizmom \\ podataka, ovde se \\ dele zadaci koji se \\ izvršavaju nad jednim \\ podatkom istovremeno \cite{dataandtaskparallel}.\end{tabular}                                                                                                                           \\ \hline
+\end{tabular}
+\end{center}
+\end{table} 
 
-Mane formi iz tabele i činjenica da se paralelizam često koristi zajedno sa sekvencijalnim programiranjem postavljaju pitanje, koliko je potencijalno ubrzanje izvršavanja zadataka ako primenimo paralelizam? Ovime se bavi ranije pomenut Amdalov zakon, koji meri efikasnost izvršavanja paralelnog programa. On kaže da celokupan dobitak zavisi od količine vremena prilikom kojeg se zapravo koristi paralelnost: \\
+Ipak, sve od ovih formi imaju svoje mane, uglavnom vezane za moguće kašnjenje podataka i generalno trošak komunikacije i sinhronizacije. Ove mane i činjenica da se paralelizam često koristi zajedno sa sekvencijalnim programiranjem postavljaju pitanje, koliko je potencijalno ubrzanje izvršavanja zadaka ako primenimo paralelizam? Ovime se bavi ranije pomenut Amdalov zakon, koji meri efikasnost izvršavanja paralelnog programa. On kaže da celokupan dobitak zavisi od količine vremena prilikom kojeg se zapravo koristi paralelnost: \\
 \begin{equation*}
 S_{max} = \frac{1}{(1 - p) + \frac{p}{s}}
 \end{equation*}\\
@@ -81,7 +85,7 @@ $S_{max}$ je maksimalna potencijalna efikasnost, $p$ procenat sistema koji je po
 \begin{equation*}
 S_{max} = N + (1 - N) * s
 \end{equation*}\\
-Gde je $S_{max}$ maksimalna potencijalna efikasnost, $N$ broj procesora koji obrađuje podatke, a $s$ vreme za koje se zadatak obradi sekvencijalno.
+Gde je $S_{max}$ maksimalna potencijalna efikasnost, $N$ broj procesora koji obrađuje podatke, a $s$ vreme za koje se zadatak obradi sekvencijalno. Ovime možemo znati da li zaista ima velike promene ako primenimo paralelizam.
 \subsection{Koraci paralelizacije programa}
 Sada kada znamo principe paralelne obrade, možemo komentarisati o koracima koji vode do kreiranja paralelnog programa. To su: dekompozicija, dodela, orkestracija i mapiranje.\par
 Dekompozicija prvo razdvaja obradu na više zadataka koji se kasnije dele među procesima. Traži paralelizam i koliko može da ga iskoristi. Cilj je kreirati dovoljno zadataka da bi ih procesori istovremeno izvršavali, pri čemu zadaci mogu nastajati dinamički i njihov broj može da varira.\par 
