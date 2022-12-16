@@ -1,0 +1,108 @@
+\documentclass{beamer}
+\usepackage{beamerthemeshadow}
+\usepackage{graphicx}
+\usepackage{color}
+\usepackage[utf8]{inputenc}
+\usepackage{hyperref}
+\usepackage[flushleft]{threeparttable}
+\usepackage{multicol} %da bi napisalo formule za amdalov zakon jedna do druge
+
+\definecolor{beamer@boja}{rgb}{0.5,0.1,0.5}
+\setbeamercolor{structure}{fg=beamer@boja}
+
+\def\d{{\fontencoding{T1}\selectfont\dj}}
+\def\D{{\fontencoding{T1}\selectfont\DJ}}
+
+
+\title{Paralelno programiranje}
+\subtitle{-- Seminarski rad --}
+\author{Aleksandar Djukić \\Marija Zrnić \\Iva Minić \\Luka Mitrović}
+\institute{Matematički fakultet\\Univerzitet u Beogradu}
+\date{
+	\footnotesize{Beograd, 2022.}	
+}
+
+\begin{document}
+	\begin{frame}
+		\thispagestyle{empty}
+		\titlepage
+	\end{frame}
+	
+	\addtocounter{framenumber}{-1}
+	
+	\begin{frame}[fragile]\frametitle{Literatura}
+		\begin{itemize}
+			\item Zasnovano na:\\
+			ubaciti literaturu ovde
+			%Goran Nenadic, Predrag Janičić, Aleksandar Samardžić: \LaTeX{} za autore, Beograd, Kompjuter biblioteka, 2003.
+			%(\url{http://poincare.matf.bg.ac.rs/~janicic//latex2e/})
+		\end{itemize}
+	\end{frame}
+	
+	%\begin{frame}
+		%\frametitle{Pregled}
+		%\tableofcontents[hidesubsections] 
+	%\end{frame}
+	
+	\section{Uvod}
+	
+	\begin{frame}[fragile]\frametitle{Uvod i istorija}
+		\begin{itemize}	
+			\item Pojam paralelnog programiranja
+			\item Razlika izmedju paralelne obrade i paralelnog programiranja
+			\bigskip
+			\item Paralelna obrada se prvi put pominje 1950-ih
+			\item 1962. Burroughs proizvodi sistem D825 sa 4 procesora
+			\item 1967. Amdalov zakon nastaje na \emph{Spring Joint} konferenciji
+			\item 1983. \emph{Caltech} proizvodi \emph{The Cosmic Cube} sa 64 procesora
+			\bigskip
+			\item 1992. \emph{Standards for Message-Passing in a Distributed Memory Environment} radionica; 1994. \emph{MPI} interfejs
+			\item 1997. \emph{OpenMP Architecture Review Board} objavljuje interfejs \emph{OpenMP} za \emph{Fortran}, zatim za C/C++.
+		\end{itemize}
+	\end{frame}
+	
+	
+	%\subsection{Princip rada}
+	\section{Princip rada paralelnog programiranja}
+	\subsection{Osnove i forme}
+	\begin{frame}[fragile]\frametitle{Osnove i forme paralelnog programiranja}
+		\begin{itemize}	
+			\item Opšte rečeno, paralelno programiranje radi tako što deli program na više delova koji se izvršavaju istovremeno.			
+			\item Da bismo razumeli celu sliku, moramo prvo objasniti paralelnu obradu:
+			%ovde moze da ide ona tabela sa formama samo skraceno
+		\end{itemize}
+	\end{frame}
+
+	\subsection{Amdalov zakon, koraci paralelizacije}
+	\begin{frame}[fragile]\frametitle{Amdalov zakon i koraci paralelizacije programa}
+	\begin{itemize}	
+		\item Amdalov zakon meri efikasnost izvršavanja paralelnog programa.
+	\end{itemize}
+	\begin{multicols}{2}
+		\begin{equation}
+			S_{max} = \frac{1}{(1 - p) + \frac{p}{s}}
+		\end{equation}\break
+		\begin{equation}
+			S_{max} = N + (1 - N) * s
+		\end{equation}
+	\end{multicols}
+	\bigskip
+	\begin{itemize}	
+		\item Koraci paralelizacije programa:
+		\begin{itemize}	
+			\item dekompozicija
+			\item dodela
+			\item orkestracija
+			\item mapiranje
+		\end{itemize}
+	\end{itemize}
+	\end{frame}
+	
+	\section{Zakljucak}
+	
+	
+	\begin{frame}[fragile]\frametitle{Zaključak}
+		%zakljucak
+	\end{frame}
+	
+\end{document}
