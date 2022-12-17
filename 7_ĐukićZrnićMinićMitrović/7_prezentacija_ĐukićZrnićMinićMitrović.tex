@@ -39,12 +39,12 @@
 		\end{itemize}
 	\end{frame}
 	
-	%\begin{frame}
-		%\frametitle{Pregled}
-		%\tableofcontents[hidesubsections] 
-	%\end{frame}
+	\begin{frame}
+		\frametitle{Pregled}
+		\tableofcontents[hidesubsections] 
+	\end{frame}
 	
-	\section{Uvod}
+	\section{Uvod i istorija}
 	
 	\begin{frame}[fragile]\frametitle{Uvod i istorija}
 		\begin{itemize}	
@@ -97,12 +97,38 @@
 		\end{itemize}
 	\end{itemize}
 	\end{frame}
-	
-	\section{Zakljucak}
-	
-	
-	\begin{frame}[fragile]\frametitle{Zaključak}
-		%zakljucak
+	% predlog - ispod koraka staviti modele i izbaciti sledeci slajd (tesno je ali moze da stane)
+	\subsection{Modeli paralelnog programiranja}
+	\begin{frame}[fragile]\frametitle{Modeli paralelnog programiranja}
+		\begin{itemize}	
+			\item Termin \emph{komunikacija} se često pominje tokom koraka paralelizacije, a on se zapravo odnosi na razmenjivanje podataka izmedju procesa koji se trenutno izvršavaju.
+			\item Na osnovu ovoga nastalo je nekoliko modela:
+			\begin{itemize}	
+				\item Model deljene memorije (\emph{shared memory model})
+				\item Model prenošenja poruke (\emph{message passing model})
+				\item Particionisani globalni adresni prostor (\emph{partitioned global address space}) -- hibridni model
+			\end{itemize}
+		\end{itemize}
 	\end{frame}
+	
+	\section{Upotrebe, prednosti i mane}
+	\begin{frame}[fragile]\frametitle{Upotrebe, prednosti i mane}
+		\begin{itemize}	
+			\item Paralelno programiranje koristimo kada imamo velike količine podataka, kompleksne račune ili velike simulacije.
+			\item Neke od oblasti u kojima se paralelno programiranje koristi su primenjena fizika, elektrotehnika, finansijsko i ekonomsko modeliranje, veštačka inteligencija, kvantna mehanika i druge.
+			\bigskip
+			\item Prednosti paralelnog programiranja: brzina, poboljšan GUI (\emph{graphic user interface}), istovremeno pokretanje različitih logika programirnja, bolje korišćenje keš memorije i CPU resursa.
+			\item Mane paralelnog programiranja: promena konteksta, nepredvidljivost, otežano programiranje, \emph{data race} i \emph{deadlock}.
+		\end{itemize}
+	\end{frame}
+	
+	\section{Primeri}
+	%primeri
+	
+
+	%\section{Zakljucak}
+	%\begin{frame}[fragile]\frametitle{Zaključak}
+		%zakljucak
+	%\end{frame}
 	
 \end{document}
