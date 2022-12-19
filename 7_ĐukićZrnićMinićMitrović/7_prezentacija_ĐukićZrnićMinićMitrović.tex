@@ -7,6 +7,8 @@
 \usepackage{hyperref}
 \usepackage[flushleft]{threeparttable}
 \usepackage{multicol} %da bi napisalo formule za amdalov zakon jedna do druge
+\usepackage[english, serbian]{babel}
+\usepackage{makecell}
 
 \definecolor{beamer@boja}{rgb}{0.5,0.1,0.5}
 \setbeamercolor{structure}{fg=beamer@boja}
@@ -65,52 +67,58 @@
 	
 	%\subsection{Princip rada}
 	\section{Princip rada paralelnog programiranja}
-	\subsection{Osnove i forme}
-	\begin{frame}[fragile]\frametitle{Osnove i forme paralelnog programiranja}
+	\subsection{Osnove i forme paralelne obrade}
+	\begin{frame}[fragile]\frametitle{Osnove i forme paralelne obrade}
 		\begin{itemize}	
-			\item Opšte rečeno, paralelno programiranje radi tako što deli program na više delova koji se izvršavaju istovremeno.			
-			\item Da bismo razumeli celu sliku, moramo prvo objasniti paralelnu obradu:
+			\item Forme paralelne obrade:
+			\begin{itemize}
+				\item \textbf{Nivo bita} (eng. \emph{bit-level})
+				\item \textbf{Nivo naredbe} (eng. \emph{instruction level})
+				\item \textbf{Paralelizam podataka} (eng. \emph{data parallelism})
+				\item \textbf{Paralelizam zadataka} (eng. \emph{task parallelism})
+			\end{itemize}
 			%ovde moze da ide ona tabela sa formama samo skraceno
 		\end{itemize}
+		\begin{table}[h]
+			\begin{center}
+			\resizebox{8cm}{!}{
+			\renewcommand{\arraystretch}{2}
+				\begin{tabular}{ |c|c| }
+					\hline
+					Naziv & Formula \\
+					\hline 
+					\makecell{Amdalov zakon} & $S_{max} = \frac{1}{(1 - p) + \frac{p}{s}}$ \\[8pt] 
+					\hline 
+					\makecell{Gustafsonov zakon} & $S_{max} = N + (1 - N) * s$ \\
+					\hline
+				\end{tabular} }
+				\caption{Modeli izračunavanja efikasnosti paralelne obrade}
+			\end{center}
+		\end{table}
 	\end{frame}
 
-	\subsection{Amdalov zakon, koraci paralelizacije}
-	\begin{frame}[fragile]\frametitle{Amdalov zakon i koraci paralelizacije programa}
-	\begin{itemize}	
-		\item Amdalov zakon meri efikasnost izvršavanja paralelnog programa.
-	\end{itemize}
-	\begin{multicols}{2}
-		\begin{equation}
-			S_{max} = \frac{1}{(1 - p) + \frac{p}{s}}
-		\end{equation}\break
-		\begin{equation}
-			S_{max} = N + (1 - N) * s
-		\end{equation}
-	\end{multicols}
-	\bigskip
+	\subsection{Koraci paralelizacije i modeli paralelnog programiranja}
+	\begin{frame}[fragile]\frametitle{Koraci paralelizacije i modeli paralelnog programiranja}
 	\begin{itemize}	
 		\item Koraci paralelizacije programa:
 		\begin{itemize}	
-			\item dekompozicija
-			\item dodela
-			\item orkestracija
-			\item mapiranje
-		\end{itemize}
+			\item \textbf{Dekompozicija} - Razdvaja obradu na više zadataka
+			\item \textbf{Dodela} - Zadaci se dele među procesima, \textbf{\emph{particionisanje}}
+			\item \textbf{Orkestracija} - Organizuje rad
+			\item \textbf{Mapiranje} - Deli procese među procesorima  
+		\end{itemize} 
+		\bigskip
+		\item \textbf{Komunikacija} - Razmena podataka između procesa koji se trenutno izvršavaju
+		\bigskip
+	 		\item Modeli paralelnog programiranja:
+				\begin{itemize}	
+					\item \textbf{Model deljene memorije} (eng. \emph{shared memory model})
+					\item \textbf{Model prenošenja poruke} (eng. \emph{message passing model})
+					\item \textbf{Particionisani globalni adresni prostor} (eng. \emph{partitioned global address space}) -- hibridni model
+				\end{itemize}
 	\end{itemize}
 	\end{frame}
 	% predlog - ispod koraka staviti modele i izbaciti sledeci slajd (tesno je ali moze da stane)
-	\subsection{Modeli paralelnog programiranja}
-	\begin{frame}[fragile]\frametitle{Modeli paralelnog programiranja}
-		\begin{itemize}	
-			\item Termin \emph{komunikacija} se često pominje tokom koraka paralelizacije, a on se zapravo odnosi na razmenjivanje podataka izmedju procesa koji se trenutno izvršavaju.
-			\item Na osnovu ovoga nastalo je nekoliko modela:
-			\begin{itemize}	
-				\item Model deljene memorije (\emph{shared memory model})
-				\item Model prenošenja poruke (\emph{message passing model})
-				\item Particionisani globalni adresni prostor (\emph{partitioned global address space}) -- hibridni model
-			\end{itemize}
-		\end{itemize}
-	\end{frame}
 	
 	\section{Upotrebe, prednosti i mane}
 	\begin{frame}[fragile]\frametitle{Upotrebe, prednosti i mane}
