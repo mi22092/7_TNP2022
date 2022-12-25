@@ -9,6 +9,7 @@
 \usepackage{multicol} %da bi napisalo formule za amdalov zakon jedna do druge
 \usepackage[english, serbian]{babel}
 \usepackage{makecell}
+\usepackage{listings}
 
 \definecolor{beamer@boja}{rgb}{0.5,0.1,0.5}
 \setbeamercolor{structure}{fg=beamer@boja}
@@ -132,7 +133,28 @@
 		\end{itemize}
 	\end{frame}
 	
-	\section{Primeri}
+	\section{Primer}
+    \begin{frame}[fragile]\frametitle{Primer - Prebrojavanje prostih brojeva u listi}
+        \begin{itemize}
+            \item Modul \emph{multiprocessing}, klasa \emph{Pool}
+        \end{itemize}
+    \begin{lstlisting}[showstringspaces=false, language=Python]
+pool = multiprocessing.Pool(processes=4)
+nums_list = generate_list(15000, 9, 12)
+nums_list = chunks(nums_list, 4)
+print(sum(pool.map(count_primes, nums_list)))
+    \end{lstlisting} 
+    \begin{figure}\includegraphics[height=3cm]{grafik_prez.png}
+    \caption{Performanse}
+    \end{figure}
+    \end{frame}
+    \section{Zaključak}
+    \begin{frame}[fragile]\frametitle{Zaključak}
+        \begin{itemize}
+            \item Pogodna tehnika za ubrzanje određenih vrsta programa
+            \item Sjajna budućnost, velikim delom zbog fizičke ograničenosti modernih mikroprocesora
+        \end{itemize}
+    \end{frame}
 	%primeri
 	
 
